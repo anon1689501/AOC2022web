@@ -10,5 +10,7 @@ import (
 func main() {
 	http.HandleFunc("/", controllers.MakeIndex)
 
+	log.Println("starting server")
 	log.Fatal(http.ListenAndServe(":80", nil))
+
 }

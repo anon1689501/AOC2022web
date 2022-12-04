@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"text/template"
 )
@@ -93,6 +94,8 @@ func WriteCookie(w http.ResponseWriter, name string, value string) {
 		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(w, &cookie)
+	log.Println("write cookie", name, value)
+
 }
 
 func DeleteCookie(w http.ResponseWriter, name string) {
@@ -106,13 +109,16 @@ func DeleteCookie(w http.ResponseWriter, name string) {
 		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(w, &cookie)
+	log.Println("deleted cookie", name)
 }
 func ReadCookie(r *http.Request, name string) (value string) {
 	cookie, _ := r.Cookie(name)
 	if cookie == nil {
 		value = ""
+		log.Println("read cookie not found", name)
 	} else {
 		value = cookie.Value
+		log.Println("read good cookie value", name, value)
 	}
 	return value
 }
